@@ -28,6 +28,21 @@
     </p>
 </header>
 
+<div id="results-section" class="container d-none">
+    <div class="row mt-3">
+        <div class="col-md-3"></div>
+        <div class="col-md">
+            <div class="row d-flex justify-content-end">
+                <div id="sort-by" class="col-5 col-md-2 mt-2 mt-md-0"></div>
+                <div
+                        id="stats"
+                        class="col-md ms-md-2 text-right small order-first order-md-last d-flex align-items-center justify-content-end justify-content-md-start px-md-0"
+                ></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <div class="search-panel">
         <div class="search-panel__results">
@@ -39,69 +54,14 @@
     <div id="pagination"></div>
 </div>
 
+curl -LJO https://raw.githubusercontent.com/typesense/typesense-instantsearch-demo-no-npm-yarn/refs/heads/master/data/books.jsonl
+
+curl "http://localhost:8108/collections/books/documents/import?action=create" -X POST -H "X-TYPESENSE-API-KEY: "       --data-binary @./books.jsonl
+
+
 <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.44.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/typesense-instantsearch-adapter@2/dist/typesense-instantsearch-adapter.min.js"></script>
 
-<script>
-    const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
-        server: {
-            apiKey: 'xyz', // Be sure to use an API key that only allows searches, in production
-            nodes: [
-                {
-                    host: 'localhost',
-                    port: '8108',
-                    protocol: 'http',
-                },
-            ],
-        },
-        // The following parameters are directly passed to Typesense's search API endpoint.
-        //  So you can pass any parameters supported by the search endpoint below.
-        //  queryBy is required.
-        //  filterBy is managed and overridden by InstantSearch.js. To set it, you want to use one of the filter widgets like refinementList or use the `configure` widget.
-        additionalSearchParameters: {
-            queryBy: 'title,authors',
-        },
-    });
-    const searchClient = typesenseInstantsearchAdapter.searchClient;
-
-    const search = instantsearch({
-        searchClient,
-        indexName: 'books',
-    });
-
-    search.addWidgets([
-        instantsearch.widgets.searchBox({
-            container: '#searchbox',
-        }),
-        instantsearch.widgets.configure({
-            hitsPerPage: 8,
-        }),
-        instantsearch.widgets.hits({
-            container: '#hits',
-            templates: {
-                item(item) {
-                    return `
-                        <div>
-                          <img src="${item.image_url}" alt="${item.name}" height="100" />
-                          <div class="hit-name">
-                            ${item._highlightResult.title.value}
-                          </div>
-                          <div class="hit-authors">
-                          ${item._highlightResult.authors.map((a) => a.value).join(', ')}
-                          </div>
-                          <div class="hit-publication-year">${item.publication_year}</div>
-                          <div class="hit-rating">${item.average_rating}/5 rating</div>
-                        </div>
-                      `;
-                },
-            },
-        }),
-        instantsearch.widgets.pagination({
-            container: '#pagination',
-        }),
-    ]);
-
-    search.start();
-</script>
+<script src="myapp.js"></script>
 </body>
 </html>
