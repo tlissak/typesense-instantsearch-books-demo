@@ -1,66 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
-
-    <link rel="manifest" href="./manifest.webmanifest">
     <link rel="shortcut icon" href="./favicon.png">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/algolia-min.css">
+
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="index.css">
 
     <title>Typesense InstantSearch.js Demo</title>
 </head>
 
 <body>
-<header class="header">
-    <h1 class="header-title">
-        <a href="/">Instant Search Demo</a>
-    </h1>
-    <p class="header-subtitle">
-        using
-        <a href="https://github.com/algolia/instantsearch.js">
-            Typesense + InstantSearch.js
-        </a>
-    </p>
-</header>
+<!--
+<button onclick="document.getElementById('algolia').disabled = document.getElementById('algolia').disabled ? '': 'disabled'" >Style toggle</button>
+<link rel="stylesheet" id="algolia" href="//cdn.jsdelivr.net/npm/instantsearch.css@7/themes/algolia-min.css">
+-->
 
-<div id="results-section" class="container d-none">
-    <div class="row mt-3">
-        <div class="col-md-3"></div>
-        <div class="col-md">
-            <div class="row d-flex justify-content-end">
-                <div id="sort-by" class="col-5 col-md-2 mt-2 mt-md-0"></div>
-                <div
-                        id="stats"
-                        class="col-md ms-md-2 text-right small order-first order-md-last d-flex align-items-center justify-content-end justify-content-md-start px-md-0"
-                ></div>
-            </div>
-        </div>
-    </div>
-</div>
+
+
 
 <div class="container">
     <div class="search-panel">
+        <nav class="navbar">
+              <div id="filters-section">
+                  <div id="clearRefinements"></div>
+                    <div id="current-refinements"></div>
+
+                  <h4>publication_year</h4>
+                  <div id="publication_year"></div>
+                  <div id="range-input"></div>
+                  <div id="range-slider"></div>
+
+                  <h4>average_rating</h4>
+                  <div id="average_rating"></div>
+
+                <h4 class="fw-light text-primary">Filter by Authors</h4>
+                <div id="author-refinement-list"></div>
+            </div>
+        </nav>
+
         <div class="search-panel__results">
             <div id="searchbox"></div>
-            <div id="hits"></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <div id="sort-by" ></div>
+                            <div id="sort-by-2" ></div>
+
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody id="hits"></tbody>
+                <tfoot>
+<tr>
+    <td>
+                <div id="pagination"></div>
+                <div id="hits-per-page"></div>
+                <div id="results-section">
+
+                    <div id="stats"></div>
+                </div>
+    </td>
+</tr>
+                </tfoot>
+            </table>
         </div>
     </div>
 
-    <div id="pagination"></div>
+
 </div>
 
-curl -LJO https://raw.githubusercontent.com/typesense/typesense-instantsearch-demo-no-npm-yarn/refs/heads/master/data/books.jsonl
-
-curl "http://localhost:8108/collections/books/documents/import?action=create" -X POST -H "X-TYPESENSE-API-KEY: "       --data-binary @./books.jsonl
 
 
-<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.44.0"></script>
-<script src="https://cdn.jsdelivr.net/npm/typesense-instantsearch-adapter@2/dist/typesense-instantsearch-adapter.min.js"></script>
+https://github.com/typesense/showcase-books-search/blob/master/index.html
+
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js" data-version="@4.78.3"></script>
+<script src="https://cdn.jsdelivr.net/npm/typesense-instantsearch-adapter/dist/typesense-instantsearch-adapter.min.js" data-version="@2.9.0"></script>
 
 <script src="myapp.js"></script>
 </body>

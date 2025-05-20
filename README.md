@@ -62,7 +62,8 @@ curl "http://localhost:8108/collections/books/documents/import?action=create" \
       -H "X-TYPESENSE-API-KEY: xyz" \
       --data-binary @./data/books.jsonl
 ```
-
+curl -LJO https://raw.githubusercontent.com/typesense/typesense-instantsearch-demo-no-npm-yarn/refs/heads/master/data/books.jsonl
+curl "http://localhost:8108/collections/books/documents/import?action=create" -X POST -H "X-TYPESENSE-API-KEY: "       --data-binary @./books.jsonl
 ### 3️⃣ Open `index.html`
 
 Now open the `index.html` file in the root of this repo in a web browser, to see the search UI.
